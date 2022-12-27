@@ -1,0 +1,51 @@
+version: "3.9"
+services:
+#   tracy-api:
+#     build:
+#       context: .
+#       dockerfile: Dockerfile.debug
+#     container_name: tracy-api
+#     restart: always
+#     ports:
+#       - "${PORT}:${PORT}"
+#       - 9229:9229
+#     depends_on:
+#       - mongo
+#     env_file:
+#       - .env
+#     networks:
+#       - server-network
+#     volumes:
+#       - .:/usr/src/app
+#       - /usr/src/app/node_modules
+#     restart: unless-stopped
+  redis:
+    image: 'redis:alpine'
+    ports:
+      - '6379:6379'
+  redis-commander:
+    image: rediscommander/redis-commander:latest
+    environment:
+      - REDIS_HOSTS=local:redis:6379
+    ports:
+      - '8081:8081'
+    depends_on:
+      - redis
+  mongo:
+    image: mongo:latest
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASSWORD}
+      MONGO_INITDB_DATABASE: ${MONGO_DATABASE}
+#     networks:
+#       - server-network
+    ports:
+      - '27017:27017'
+#     healthcheck:
+#       test: echo 'db.runCommand("ping").ok' | mongo localhost:27017/test --quiet
+#       interval: 30s
+#       timeout: 10s
+#       retries: 3
+#     restart: unless-stopped
+networks:
+  server-network:
