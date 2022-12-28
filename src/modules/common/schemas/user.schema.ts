@@ -1,4 +1,5 @@
-import { HydratedDocument } from "mongoose";
+import * as bcrypt from 'bcrypt';
+import { HydratedDocument } from 'mongoose';
 import uniqueValidator from 'mongoose-unique-validator';
 import { Exclude, Transform, Type } from 'class-transformer';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
@@ -46,3 +47,12 @@ export class User {
 
 export const UserSchema =
   SchemaFactory.createForClass(User).plugin(uniqueValidator);
+
+UserSchema.pre('save', async function (next) {
+  if (this.isModified('password')) {
+    const hashed = await bcrypt.hash(this.password, 14);
+    this.set('password', hashed);
+  }
+
+  next();
+});

@@ -1,9 +1,15 @@
 import { Module } from '@nestjs/common';
+import { CommandModule } from 'nestjs-command';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { UsersModule } from '~modules/users/users.module';
+
+import seeds from './seeds';
 
 @Module({
   imports: [
+    UsersModule,
+    CommandModule,
     MongooseModule.forRootAsync({
       imports: [ConfigModule],
       useFactory: async (configService: ConfigService) => {
@@ -22,5 +28,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
       inject: [ConfigService],
     }),
   ],
+  providers: [...seeds],
+  exports: [...seeds],
 })
 export class DatabaseModule {}

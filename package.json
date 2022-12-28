@@ -17,7 +17,8 @@
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./test/jest-e2e.json"
+    "test:e2e": "jest --config ./test/jest-e2e.json",
+    "seed": "CLI_PATH=./dist/src/utils/seeds/cli.js npx nestjs-command"
   },
   "dependencies": {
     "@nestjs/bull": "0.6.2",
@@ -41,6 +42,7 @@
     "helmet": "6.0.1",
     "mongoose": "6.4.6",
     "mongoose-unique-validator": "3.1.0",
+    "nestjs-command": "3.1.2",
     "nodemailer": "6.8.0",
     "passport": "0.6.0",
     "passport-google-oauth20": "2.0.0",
@@ -50,7 +52,8 @@
     "reflect-metadata": "0.1.13",
     "rimraf": "3.0.2",
     "rxjs": "7.8.0",
-    "webpack": "5.75.0"
+    "webpack": "5.75.0",
+    "yargs": "17.6.2"
   },
   "devDependencies": {
     "@nestjs/cli": "9.1.5",
@@ -67,6 +70,7 @@
     "@types/passport-jwt": "3.0.8",
     "@types/passport-local": "1.0.34",
     "@types/supertest": "2.0.12",
+    "@types/yargs": "17.0.17",
     "@typescript-eslint/eslint-plugin": "5.47.0",
     "@typescript-eslint/parser": "5.47.0",
     "eslint": "8.30.0",

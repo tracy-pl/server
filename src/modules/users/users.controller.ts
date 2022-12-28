@@ -30,12 +30,18 @@ import RequestWithJWT from '../common/interfaces/RequestWithJWT';
 @Controller('users')
 @ApiTags('users')
 @UseGuards(JwtAuthGuard)
+@ApiBearerAuth('accessToken')
 @UseInterceptors(MongooseClassSerializerInterceptor(User))
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
+  @Get()
+  @Roles(Role.Admin)
+  getUsers(): Promise<User[]> {
+    return this.usersService.findAll();
+  }
+
   @Get('profile')
-  @ApiBearerAuth('accessToken')
   // @UseGuards(EmailConfirmationGuard)
   getProfile(@Request() req): Promise<User> {
     return this.usersService.findById(req.user.userId);

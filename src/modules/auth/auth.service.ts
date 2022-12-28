@@ -1,3 +1,4 @@
+import * as bcrypt from 'bcrypt';
 import {
   BadRequestException,
   ConflictException,
@@ -7,14 +8,13 @@ import {
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 
-import * as bcrypt from 'bcrypt';
 import { RegisterRequest } from './dto/requests.dto';
 import { UserResponseDto } from '../users/dto/responses.dto';
-import { UsersService } from '../users/users.service';
 import { MailConfirmationService } from '../mail/mailConfirmation.service';
-import { Provider } from '~modules/users/providers/providers.enum';
-import { User } from '~modules/common/schemas/user.schema';
+import { UsersService } from '~modules/users';
 import { MailService } from '~modules/mail/mail.service';
+import { User } from '~modules/common/schemas/user.schema';
+import { Provider } from '~modules/users/providers/providers.enum';
 
 @Injectable()
 export class AuthService {
@@ -31,15 +31,13 @@ export class AuthService {
     pass: string,
   ): Promise<UserResponseDto | null> {
     const user = await this.usersService.findOne(email);
+    const isPasswordMatching = await bcrypt.compare(pass, user.password);
 
-    if (
-      user &&
-      (await bcrypt.compare(pass, user.password)) &&
-      user.providers.includes(Provider.Local)
-    ) {
+    if (user && isPasswordMatching && user.providers.includes(Provider.Local)) {
       delete user.password;
       return user;
     }
+
     return null;
   }
 
@@ -49,13 +47,7 @@ export class AuthService {
     name,
     provider,
   }: RegisterRequest & { provider: Provider }): Promise<void> {
-    const hashedPassword = await bcrypt.hash(password, 10);
-    await this.usersService.createLocalUser(
-      email,
-      hashedPassword,
-      name,
-      provider,
-    );
+    await this.usersService.createLocalUser(email, password, name, provider);
     // this.sendVerificationLink(email);
     return;
   }
@@ -162,7 +154,7 @@ export class AuthService {
 
   async updatePassword(token: string, newPassword: string): Promise<void> {
     try {
-      const { id, key } = await this.jwtService.verify<{
+      const { id, key } = this.jwtService.verify<{
         id: string;
         key: string;
       }>(token, {
@@ -171,11 +163,14 @@ export class AuthService {
 
       const user = await this.usersService.findById(id);
       const validKey = await bcrypt.compare(user.password.slice(10, 18), key);
+
       if (!validKey) throw new Error('Not valid key');
+
       const samePassword = await bcrypt.compare(newPassword, user.password);
+
       if (samePassword) throw new Error('Old and new password a the same');
-      const hashedPassword = await bcrypt.hash(newPassword, 10);
-      await this.usersService.updatePassword(id, hashedPassword);
+
+      await this.usersService.updatePassword(id, newPassword);
     } catch (error) {
       if (
         error instanceof Error &&

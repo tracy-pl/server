@@ -1273,7 +1273,7 @@
   resolved "https://registry.yarnpkg.com/@types/yargs-parser/-/yargs-parser-21.0.0.tgz#0c60e537fa790f5f9472ed2776c2b71ec117351b"
   integrity sha512-iO9ZQHkZxHn4mSakYV0vFHAVDyEOIJQrV2uZ06HxEPcx+mt8swXoZHIbaaJ2crJYFfErySgktuTZ3BeLz+XmFA==
 
-"@types/yargs@^17.0.8":
+"@types/yargs@17.0.17", "@types/yargs@^17.0.8":
   version "17.0.17"
   resolved "https://registry.yarnpkg.com/@types/yargs/-/yargs-17.0.17.tgz#5672e5621f8e0fca13f433a8017aae4b7a2a03e7"
   integrity sha512-72bWxFKTK6uwWJAVT+3rF6Jo6RTojiJ27FQo8Rf60AL+VZbzoVPnMFhKsUnbjR8A3BTCYQ7Mv3hnl8T0A+CX9g==
@@ -3966,10 +3966,20 @@ lodash.clonedeep@^4.5.0:
   resolved "https://registry.yarnpkg.com/lodash.clonedeep/-/lodash.clonedeep-4.5.0.tgz#e23f3f9c4f8fbdde872529c1071857a086e5ccef"
   integrity sha512-H5ZhCF25riFd9uB5UCkVKo61m3S/xZk1x4wA6yp/L3RFP6Z/eHH1ymQcGLo7J3GMPfm0V/7m1tryHuGVxpqEBQ==
 
+lodash.compact@^3.0.1:
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/lodash.compact/-/lodash.compact-3.0.1.tgz#540ce3837745975807471e16b4a2ba21e7256ca5"
+  integrity sha512-2ozeiPi+5eBXW1CLtzjk8XQFhQOEMwwfxblqeq6EGyTxZJ1bPATqilY0e6g2SLQpP4KuMeuioBhEnWz5Pr7ICQ==
+
 lodash.defaults@^4.2.0:
   version "4.2.0"
   resolved "https://registry.yarnpkg.com/lodash.defaults/-/lodash.defaults-4.2.0.tgz#d09178716ffea4dde9e5fb7b37f6f0802274580c"
   integrity sha512-qjxPLHd3r5DnsdGacqOMU6pb/avJzdh9tFX2ymgoZE27BmjXrNy/y4LoaiTeAb+O3gL8AfpJGtqfX/ae2leYYQ==
+
+lodash.flattendeep@^4.4.0:
+  version "4.4.0"
+  resolved "https://registry.yarnpkg.com/lodash.flattendeep/-/lodash.flattendeep-4.4.0.tgz#fb030917f86a3134e5bc9bec0d69e0013ddfedb2"
+  integrity sha512-uHaJFihxmJcEX3kT4I23ABqKKalJ/zDrDg0lsFtc1h+3uw49SIJ5beyhx5ExVRti3AvKoOJngIj7xz3oylPdWQ==
 
 lodash.foreach@^4.1.0:
   version "4.5.0"
@@ -4344,6 +4354,14 @@ neo-async@^2.6.2:
   version "2.6.2"
   resolved "https://registry.yarnpkg.com/neo-async/-/neo-async-2.6.2.tgz#b4aafb93e3aeb2d8174ca53cf163ab7d7308305f"
   integrity sha512-Yd3UES5mWCSqR+qNT93S3UoYUkqAZ9lLg8a7g9rimsWmYGK8cVToA4/sF3RrshdyV3sAGMXVUmpMYOw+dLpOuw==
+
+nestjs-command@3.1.2:
+  version "3.1.2"
+  resolved "https://registry.yarnpkg.com/nestjs-command/-/nestjs-command-3.1.2.tgz#a3eb6fbe24a41b4a6bfb0db36e45dfd3a0c7bac2"
+  integrity sha512-9PG4cEqx2OME+YSO7uzLg6YBzGwP7rv9ULZqa+Uitu7KR5S/FEWj1BrmET9vdWG61H/jy9mJdYro4ml4je02cg==
+  dependencies:
+    lodash.compact "^3.0.1"
+    lodash.flattendeep "^4.4.0"
 
 node-abort-controller@^3.0.1:
   version "3.0.1"
@@ -5855,7 +5873,7 @@ yargs-parser@21.1.1, yargs-parser@^21.0.1, yargs-parser@^21.1.1:
   resolved "https://registry.yarnpkg.com/yargs-parser/-/yargs-parser-21.1.1.tgz#9096bceebf990d21bb31fa9516e0ede294a77d35"
   integrity sha512-tVpsJW7DdjecAiFpbIB1e3qxIQsE6NoPc5/eTdrbbIC4h0LVsWhnoa3g+m2HclBIujHzsxZ4VJVA+GUuc2/LBw==
 
-yargs@^17.3.1:
+yargs@17.6.2, yargs@^17.3.1:
   version "17.6.2"
   resolved "https://registry.yarnpkg.com/yargs/-/yargs-17.6.2.tgz#2e23f2944e976339a1ee00f18c77fedee8332541"
   integrity sha512-1/9UrdHjDZc0eOU0HxOHoS78C69UD3JRMvzlJ7S79S2nTaWRA/whGCTV8o9e/N/1Va9YIV7Q4sOxD8VV4pCWOw==

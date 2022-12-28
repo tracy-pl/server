@@ -18,12 +18,14 @@ export class UsersService {
     password: string,
     name: string,
     provider: Provider,
+    isAdmin?: boolean,
   ): Promise<User> {
     return this.usersRepository.createLocalUser(
       email,
       password,
       name,
       provider,
+      isAdmin,
     );
   }
 
@@ -41,7 +43,6 @@ export class UsersService {
     if (!result) {
       throw new NotFoundException();
     }
-    return;
   }
 
   async setRefreshToken(refreshToken: string, userId: string): Promise<void> {
@@ -50,7 +51,6 @@ export class UsersService {
     if (!user) {
       throw new NotFoundException('Unable to set refresh token');
     }
-    return;
   }
 
   async updateRefreshTokenForUser(
@@ -58,10 +58,10 @@ export class UsersService {
     userId: string,
   ): Promise<void> {
     const user = await this.usersRepository.update(userId, hashedRefreshToken);
+
     if (!user) {
       throw new NotFoundException('Unable update refresh token');
     }
-    return;
   }
 
   async findById(userId: string): Promise<User> {
@@ -106,5 +106,9 @@ export class UsersService {
     profileData: { about: string; name: string },
   ): Promise<User> {
     return await this.usersRepository.updateProfile(id, profileData);
+  }
+
+  findAll(): Promise<User[]> {
+    return this.usersRepository.findAll();
   }
 }
