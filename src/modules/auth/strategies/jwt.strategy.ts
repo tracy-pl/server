@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { PassportStrategy } from '@nestjs/passport';
 import { ExtractJwt, Strategy } from 'passport-jwt';
+import { Role } from '~modules/users/roles/role.enum';
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
@@ -17,15 +18,20 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     email: string;
     sub: string;
     emailIsConfirmed: boolean;
-  }): Promise<{ userId: string; email: string; emailIsConfirmed: boolean }> {
+    roles: Role[];
+  }): Promise<{
+    userId: string;
+    email: string;
+    emailIsConfirmed: boolean;
+    roles: Role[];
+  }> {
     //add revoked tokens check
 
-    const result = {
+    return {
       userId: payload.sub,
       email: payload.email,
       emailIsConfirmed: payload.emailIsConfirmed,
+      roles: payload.roles,
     };
-
-    return result;
   }
 }

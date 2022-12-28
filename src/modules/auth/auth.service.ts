@@ -80,6 +80,7 @@ export class AuthService {
       emailIsConfirmed: user.emailIsConfirmed,
       tokenType: 'access',
       avatarURL: user.avatar?.url,
+      roles: user.roles,
     };
     const refreshToken = this.jwtService.sign(
       { sub: user._id, tokenType: 'refresh' },
@@ -89,6 +90,7 @@ export class AuthService {
       },
     );
     await this.saveHashedRefreshToken(refreshToken, user._id);
+
     return {
       accessToken: this.jwtService.sign(accessTokenPayload),
       refreshToken,
@@ -118,8 +120,8 @@ export class AuthService {
     if (!tokenValid || !user.refreshToken) {
       throw new ForbiddenException('refresh token not valid');
     }
-    const tokens = await this.createTokens(user);
-    return tokens;
+
+    return await this.createTokens(user);
   }
 
   async sendDropPasswordToken(email: string): Promise<void> {

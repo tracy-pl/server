@@ -27,9 +27,11 @@ import { FileInterceptor } from '@nestjs/platform-express';
 import { PatchProfileDTO } from './dto/requests.dto';
 import RequestWithJWT from '../common/interfaces/RequestWithJWT';
 
+import { RolesGuard } from '~utils/guards/roles.guard';
+
 @Controller('users')
 @ApiTags('users')
-@UseGuards(JwtAuthGuard)
+@UseGuards(JwtAuthGuard, RolesGuard)
 @ApiBearerAuth('accessToken')
 @UseInterceptors(MongooseClassSerializerInterceptor(User))
 export class UsersController {
